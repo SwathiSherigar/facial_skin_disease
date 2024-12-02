@@ -5,7 +5,7 @@ from tensorflow.keras.models import load_model
 import matplotlib.pyplot as plt
 
 # Load the saved model
-model = load_model(r'A:\face_disease\FSD\skin_disease_model.h5')
+model = load_model(r'A:\face_disease\skin_disease_model.h5')
 
 # Define class labels
 classes = ['Acne', 'Actinic Keratosis', 'Basal Cell Carcinom', 'Eczemaa', 'Rosacea']

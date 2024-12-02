@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Disease Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f4f4f9;
+        }
+        .container {
+            margin: 20px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .upload-btn, .capture-btn {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-btn:hover, .capture-btn:hover {
+            background-color: #0056b3;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        video {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Skin Disease Predictor</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button type="submit" class="upload-btn">Upload Image</button>
+        </form>
+        <h2>Live Camera Feed:</h2>
+        <video id="video" autoplay></video>
+        <form method="POST">
+            <button type="submit" name="capture" value="capture" class="capture-btn">Capture Photo</button>
+        </form>
+
+        {% if image_path %}
+        <h2>Uploaded/Captured Image:</h2>
+        <img src="{{ image_path }}" alt="Input Image">
+        {% endif %}
+
+        {% if predicted_label %}
+        <h2>Prediction: {{ predicted_label }}</h2>
+        <p>Confidence Scores:</p>
+        <ul>
+            {% for i in range(prediction|length) %}
+            <li>{{ classes[i] }}: {{ "%.2f"|format(prediction[i] * 100) }}%</li>
+            {% endfor %}
+        </ul>
+        <h3>Result:</h3>
+        <img src="{{ url_for('static', filename='uploads/result.png') }}" alt="Result Image">
+        {% endif %}
+    </div>
+</body>
+</html>
